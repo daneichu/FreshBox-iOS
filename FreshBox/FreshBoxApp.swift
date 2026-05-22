@@ -8,7 +8,7 @@
 import SwiftUI
 import CoreData
 
-@main›
+@main
 struct FreshBoxApp: App {
     let persistenceController = PersistenceController.shared
 
