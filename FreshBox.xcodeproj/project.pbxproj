@@ -13,6 +13,7 @@
 		9D063C6C2FC1D299009ADDD3 /* RecipeListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D063C6B2FC1D297009ADDD3 /* RecipeListView.swift */; };
 		9D063C6E2FC1D2A4009ADDD3 /* FavoritesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D063C6D2FC1D2A3009ADDD3 /* FavoritesView.swift */; };
 		9D063C702FC1D44E009ADDD3 /* RecipeDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D063C6F2FC1D449009ADDD3 /* RecipeDetailView.swift */; };
+		9D82437E2FD6D2C5000A0E02 /* OpenAIRecipeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D82437D2FD6D21F000A0E02 /* OpenAIRecipeService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +24,7 @@
 		9D063C6D2FC1D2A3009ADDD3 /* FavoritesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesView.swift; sourceTree = "<group>"; };
 		9D063C6F2FC1D449009ADDD3 /* RecipeDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetailView.swift; sourceTree = "<group>"; };
 		9D5B8BA82FBC36E30023DAD1 /* FreshBox.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FreshBox.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		9D82437D2FD6D21F000A0E02 /* OpenAIRecipeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAIRecipeService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -74,6 +76,7 @@
 		9D063C652FC1CF8E009ADDD3 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				9D82437D2FD6D21F000A0E02 /* OpenAIRecipeService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -181,6 +184,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9D063C682FC1D0CA009ADDD3 /* AddIngredientView.swift in Sources */,
+				9D82437E2FD6D2C5000A0E02 /* OpenAIRecipeService.swift in Sources */,
 				9D063C702FC1D44E009ADDD3 /* RecipeDetailView.swift in Sources */,
 				9D063C6C2FC1D299009ADDD3 /* RecipeListView.swift in Sources */,
 				9D063C5E2FC1CE78009ADDD3 /* ContentView.swift in Sources */,

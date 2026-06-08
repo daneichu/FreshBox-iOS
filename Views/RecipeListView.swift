@@ -8,44 +8,11 @@ struct RecipeListView: View {
     )
     private var ingredients: FetchedResults<Ingredient>
 
-    let sampleRecipes = [
-        Recipe(
-            title: "달걀 볶음밥",
-            usedIngredients: ["달걀", "양파"],
-            extraIngredients: ["밥", "간장"],
-            steps: [
-                "달걀을 풀고 양파를 잘게 썰어줍니다.",
-                "팬에 기름을 두르고 양파를 먼저 볶습니다.",
-                "밥과 달걀을 넣고 함께 볶은 뒤 간장으로 간을 맞춥니다."
-            ],
-            time: "15분",
-            difficulty: "쉬움"
-        ),
-        Recipe(
-            title: "양파 수프",
-            usedIngredients: ["양파"],
-            extraIngredients: ["버터", "물", "소금"],
-            steps: [
-                "양파를 얇게 썰어줍니다.",
-                "냄비에 버터를 녹이고 양파를 충분히 볶습니다.",
-                "물을 넣고 끓인 뒤 소금으로 간을 맞춥니다."
-            ],
-            time: "20분",
-            difficulty: "보통"
-        ),
-        Recipe(
-            title: "오이 샐러드",
-            usedIngredients: ["오이"],
-            extraIngredients: ["소금", "식초", "설탕"],
-            steps: [
-                "오이를 얇게 썰어줍니다.",
-                "소금, 식초, 설탕을 넣고 가볍게 섞습니다.",
-                "차갑게 보관한 뒤 먹기 좋게 담아냅니다."
-            ],
-            time: "10분",
-            difficulty: "쉬움"
-        )
-    ]
+    @State private var recipes: [Recipe] = []
+    @State private var isLoading = false
+    @State private var errorMessage: String?
+
+    private let recipeService = OpenAIRecipeService()
 
     private var ingredientNames: String {
         ingredients
@@ -59,13 +26,57 @@ struct RecipeListView: View {
                 VStack(alignment: .leading, spacing: 16) {
                     recommendationHeader
 
-                    ForEach(sampleRecipes) { recipe in
-                        NavigationLink {
-                            RecipeDetailView(recipe: recipe)
-                        } label: {
-                            recipeCard(recipe)
+                    Button {
+                        Task {
+                            await generateRecipes()
                         }
-                        .buttonStyle(PlainButtonStyle())
+                    } label: {
+                        Text(isLoading ? "추천 생성 중..." : "레시피 추천받기")
+                            .fontWeight(.bold)
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(ingredientNames.isEmpty ? Color.gray : Color.green)
+                            .foregroundColor(.white)
+                            .cornerRadius(16)
+                    }
+                    .disabled(ingredientNames.isEmpty || isLoading)
+
+                    if let errorMessage = errorMessage {
+                        Text(errorMessage)
+                            .font(.caption)
+                            .foregroundColor(.red)
+                    }
+
+                    if isLoading {
+                        ProgressView("레시피를 찾는 중...")
+                            .frame(maxWidth: .infinity)
+                            .padding(.top, 30)
+                    }
+
+                    if recipes.isEmpty && !isLoading {
+                        VStack(spacing: 12) {
+                            Image(systemName: "fork.knife.circle")
+                                .font(.system(size: 54))
+                                .foregroundColor(.gray)
+
+                            Text("아직 추천된 레시피가 없어요")
+                                .font(.headline)
+
+                            Text("냉장고 재료를 추가한 뒤 추천을 받아보세요.")
+                                .font(.subheadline)
+                                .foregroundColor(.gray)
+                        }
+                        .frame(maxWidth: .infinity)
+                        .padding(.top, 40)
+                    } else {
+                        ForEach(recipes) { recipe in
+                            NavigationLink {
+                                RecipeDetailView(recipe: recipe)
+                            } label: {
+                                recipeCard(recipe)
+                            }
+                            .buttonStyle(PlainButtonStyle())
+                        }
                     }
                 }
                 .padding()
@@ -117,6 +128,25 @@ struct RecipeListView: View {
         .cornerRadius(20)
         .shadow(color: .black.opacity(0.05), radius: 5)
         .contentShape(Rectangle())
+    }
+
+    private func generateRecipes() async {
+        guard !ingredientNames.isEmpty else {
+            errorMessage = "냉장고 재료를 먼저 추가해주세요."
+            return
+        }
+
+        isLoading = true
+        errorMessage = nil
+
+        do {
+            recipes = try await recipeService.generateRecipes(from: ingredientNames)
+        } catch {
+            errorMessage = "레시피 추천을 불러오지 못했어요."
+            print("레시피 생성 실패: \(error.localizedDescription)")
+        }
+
+        isLoading = false
     }
 }
 
