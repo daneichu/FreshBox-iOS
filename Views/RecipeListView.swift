@@ -12,14 +12,11 @@ struct RecipeListView: View {
         NavigationView {
             ScrollView {
                 VStack(spacing: 16) {
-
                     ForEach(sampleRecipes) { recipe in
                         NavigationLink {
                             RecipeDetailView(recipe: recipe)
                         } label: {
-
                             VStack(alignment: .leading, spacing: 12) {
-
                                 Text(recipe.title)
                                     .font(.title3)
                                     .fontWeight(.bold)
@@ -36,6 +33,7 @@ struct RecipeListView: View {
                             .background(Color(.systemBackground))
                             .cornerRadius(20)
                             .shadow(color: .black.opacity(0.05), radius: 5)
+                            .contentShape(Rectangle())
                         }
                         .buttonStyle(PlainButtonStyle())
                     }

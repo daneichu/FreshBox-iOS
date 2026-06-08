@@ -10,6 +10,10 @@ import CoreData
 
 @main
 struct FreshBoxApp: App {
+    init() {
+        UITabBar.appearance().backgroundColor = UIColor.white
+    }
+    
     let persistenceController = PersistenceController.shared
 
     var body: some Scene {

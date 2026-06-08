@@ -15,7 +15,7 @@ struct HomeView: View {
         NavigationView {
             VStack {
                 if ingredients.isEmpty {
-                    VStack(spacing: 12) {
+                    VStack(spacing: 16) {
                         Text("🧊")
                             .font(.system(size: 60))
                         
@@ -30,7 +30,10 @@ struct HomeView: View {
                 } else {
                     List {
                         ForEach(ingredients) { ingredient in
-                            HStack {
+                            HStack(spacing: 12) {
+                                Text(ingredientEmoji(for: ingredient.name))
+                                    .font(.title2)
+
                                 VStack(alignment: .leading, spacing: 6) {
                                     Text(ingredient.name ?? "이름 없음")
                                         .font(.headline)
@@ -49,9 +52,9 @@ struct HomeView: View {
                                     .padding(.vertical, 6)
                                     .background(dDayColor(for: ingredient.expiryDate).opacity(0.2))
                                     .foregroundColor(dDayColor(for: ingredient.expiryDate))
-                                    .cornerRadius(10)
+                                    .cornerRadius(18)
                             }
-                            .padding(.vertical, 4)
+                            .padding(.horizontal)
                         }
                         .onDelete(perform: deleteIngredients)
                     }
@@ -116,5 +119,26 @@ struct HomeView: View {
         } else {
             return .green
         }
+    }
+}
+private func ingredientEmoji(for name: String?) -> String {
+    let name = name ?? ""
+
+    if name.contains("달걀") || name.contains("계란") {
+        return "🥚"
+    } else if name.contains("오이") {
+        return "🥒"
+    } else if name.contains("양파") {
+        return "🧅"
+    } else if name.contains("당근") {
+        return "🥕"
+    } else if name.contains("마늘") {
+        return "🧄"
+    } else if name.contains("우유") {
+        return "🥛"
+    } else if name.contains("고기") {
+        return "🥩"
+    } else {
+        return "🥬"
     }
 }
