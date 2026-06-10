@@ -54,7 +54,7 @@ struct HomeView: View {
                                     .foregroundColor(dDayColor(for: ingredient.expiryDate))
                                     .cornerRadius(18)
                             }
-                            .padding(.horizontal)
+                            .padding(.vertical, 4)
                         }
                         .onDelete(perform: deleteIngredients)
                     }
@@ -62,6 +62,10 @@ struct HomeView: View {
             }
             .navigationTitle("내 냉장고")
             .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    EditButton()
+                }
+                
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
                         isShowingAddIngredient = true
@@ -120,25 +124,26 @@ struct HomeView: View {
             return .green
         }
     }
-}
-private func ingredientEmoji(for name: String?) -> String {
-    let name = name ?? ""
+    
+    private func ingredientEmoji(for name: String?) -> String {
+        let name = name ?? ""
 
-    if name.contains("달걀") || name.contains("계란") {
-        return "🥚"
-    } else if name.contains("오이") {
-        return "🥒"
-    } else if name.contains("양파") {
-        return "🧅"
-    } else if name.contains("당근") {
-        return "🥕"
-    } else if name.contains("마늘") {
-        return "🧄"
-    } else if name.contains("우유") {
-        return "🥛"
-    } else if name.contains("고기") {
-        return "🥩"
-    } else {
-        return "🥬"
+        if name.contains("달걀") || name.contains("계란") {
+            return "🥚"
+        } else if name.contains("오이") {
+            return "🥒"
+        } else if name.contains("양파") {
+            return "🧅"
+        } else if name.contains("당근") {
+            return "🥕"
+        } else if name.contains("마늘") {
+            return "🧄"
+        } else if name.contains("우유") {
+            return "🥛"
+        } else if name.contains("고기") {
+            return "🥩"
+        } else {
+            return "🥬"
+        }
     }
 }

@@ -1,11 +1,16 @@
 import SwiftUI
+import CoreData
 
 struct RecipeDetailView: View {
+    @Environment(\.managedObjectContext) private var viewContext
+    @State private var isSaved = false
+    
     let recipe: Recipe
     
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 24) {
+                
                 Text(recipe.title)
                     .font(.largeTitle)
                     .fontWeight(.bold)
@@ -42,16 +47,17 @@ struct RecipeDetailView: View {
                 }
                 
                 Button {
-                    print("즐겨찾기 저장")
+                    saveFavoriteRecipe()
                 } label: {
-                    Text("즐겨찾기 저장")
+                    Text(isSaved ? "저장 완료" : "즐겨찾기 저장")
                         .fontWeight(.bold)
                         .frame(maxWidth: .infinity)
                         .padding()
-                        .background(Color.green)
+                        .background(isSaved ? Color.gray : Color.green)
                         .foregroundColor(.white)
                         .cornerRadius(16)
                 }
+                .disabled(isSaved)
             }
             .padding()
         }
@@ -82,5 +88,30 @@ struct RecipeDetailView: View {
             .padding(.vertical, 8)
             .background(color.opacity(0.15))
             .cornerRadius(12)
+    }
+    
+    private func saveFavoriteRecipe() {
+        let request: NSFetchRequest<FavoriteRecipe> = FavoriteRecipe.fetchRequest()
+        request.predicate = NSPredicate(format: "title == %@", recipe.title)
+        
+        do {
+            let existingFavorites = try viewContext.fetch(request)
+            
+            if !existingFavorites.isEmpty {
+                isSaved = true
+                return
+            }
+            
+            let favorite = FavoriteRecipe(context: viewContext)
+            favorite.id = UUID()
+            favorite.title = recipe.title
+            favorite.createdAt = Date()
+            
+            try viewContext.save()
+            isSaved = true
+            print("즐겨찾기 저장 완료")
+        } catch {
+            print("즐겨찾기 저장 실패: \(error.localizedDescription)")
+        }
     }
 }
