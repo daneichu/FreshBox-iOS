@@ -16,6 +16,8 @@
 		9D82437E2FD6D2C5000A0E02 /* OpenAIRecipeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D82437D2FD6D21F000A0E02 /* OpenAIRecipeService.swift */; };
 		9D8243822FD6D5A7000A0E02 /* Config.plist in Sources */ = {isa = PBXBuildFile; fileRef = 9D8243812FD6D5A5000A0E02 /* Config.plist */; };
 		9D8243842FD6D733000A0E02 /* ConfigManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D8243832FD6D732000A0E02 /* ConfigManager.swift */; };
+		9D8243932FD9402C000A0E02 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D8243922FD94027000A0E02 /* NotificationService.swift */; };
+		9D8243972FD94738000A0E02 /* NotificationLogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D8243962FD94732000A0E02 /* NotificationLogView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +31,8 @@
 		9D82437D2FD6D21F000A0E02 /* OpenAIRecipeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAIRecipeService.swift; sourceTree = "<group>"; };
 		9D8243812FD6D5A5000A0E02 /* Config.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Config.plist; sourceTree = "<group>"; };
 		9D8243832FD6D732000A0E02 /* ConfigManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigManager.swift; sourceTree = "<group>"; };
+		9D8243922FD94027000A0E02 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
+		9D8243962FD94732000A0E02 /* NotificationLogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationLogView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -60,6 +64,7 @@
 		9D063C632FC1CF7E009ADDD3 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				9D8243962FD94732000A0E02 /* NotificationLogView.swift */,
 				9D063C6F2FC1D449009ADDD3 /* RecipeDetailView.swift */,
 				9D063C6D2FC1D2A3009ADDD3 /* FavoritesView.swift */,
 				9D063C6B2FC1D297009ADDD3 /* RecipeListView.swift */,
@@ -80,6 +85,7 @@
 		9D063C652FC1CF8E009ADDD3 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				9D8243922FD94027000A0E02 /* NotificationService.swift */,
 				9D8243832FD6D732000A0E02 /* ConfigManager.swift */,
 				9D82437D2FD6D21F000A0E02 /* OpenAIRecipeService.swift */,
 			);
@@ -191,6 +197,8 @@
 			files = (
 				9D063C682FC1D0CA009ADDD3 /* AddIngredientView.swift in Sources */,
 				9D8243822FD6D5A7000A0E02 /* Config.plist in Sources */,
+				9D8243972FD94738000A0E02 /* NotificationLogView.swift in Sources */,
+				9D8243932FD9402C000A0E02 /* NotificationService.swift in Sources */,
 				9D82437E2FD6D2C5000A0E02 /* OpenAIRecipeService.swift in Sources */,
 				9D8243842FD6D733000A0E02 /* ConfigManager.swift in Sources */,
 				9D063C702FC1D44E009ADDD3 /* RecipeDetailView.swift in Sources */,

@@ -46,6 +46,12 @@ struct AddIngredientView: View {
 
         do {
             try viewContext.save()
+
+            NotificationService.scheduleExpiryNotification(
+                for: name,
+                dDay: 3
+            )
+
             dismiss()
         } catch {
             print("재료 저장 실패: \(error.localizedDescription)")

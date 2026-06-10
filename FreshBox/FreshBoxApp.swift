@@ -12,9 +12,12 @@ import CoreData
 struct FreshBoxApp: App {
     init() {
         UITabBar.appearance().backgroundColor = UIColor.white
+        NotificationService.requestPermission()
     }
     
     let persistenceController = PersistenceController.shared
+    
+    
 
     var body: some Scene {
         WindowGroup {

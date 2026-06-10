@@ -78,6 +78,9 @@ struct HomeView: View {
                 AddIngredientView()
                     .environment(\.managedObjectContext, viewContext)
             }
+            .onAppear {
+                scheduleNotificationsForExpiringIngredients()
+            }
         }
     }
 
@@ -90,6 +93,41 @@ struct HomeView: View {
             } catch {
                 print("삭제 실패: \(error.localizedDescription)")
             }
+        }
+    }
+
+    private func scheduleNotificationsForExpiringIngredients() {
+        for ingredient in ingredients {
+            guard let name = ingredient.name,
+                  let expiryDate = ingredient.expiryDate else { continue }
+
+            let today = Calendar.current.startOfDay(for: Date())
+            let expiry = Calendar.current.startOfDay(for: expiryDate)
+            let days = Calendar.current.dateComponents([.day], from: today, to: expiry).day ?? 0
+
+            if days >= 0 && days <= 3 {
+                let message = "\(name)이(가) D-\(days)입니다. 오늘 레시피로 활용해보세요."
+
+                NotificationService.scheduleExpiryNotification(
+                    for: name,
+                    dDay: days
+                )
+
+                saveNotificationLog(message: message)
+            }
+        }
+    }
+    
+    private func saveNotificationLog(message: String) {
+        let log = NotificationLog(context: viewContext)
+        log.id = UUID()
+        log.message = message
+        log.createdAt = Date()
+
+        do {
+            try viewContext.save()
+        } catch {
+            print("알림 기록 저장 실패: \(error.localizedDescription)")
         }
     }
 

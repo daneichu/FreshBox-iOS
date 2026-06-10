@@ -1,25 +1,27 @@
 import SwiftUI
-import CoreData
 
 struct ContentView: View {
     var body: some View {
         TabView {
+
             HomeView()
                 .tabItem {
-                    Image(systemName: "refrigerator")
-                    Text("냉장고")
+                    Label("냉장고", systemImage: "refrigerator")
                 }
 
             RecipeListView()
                 .tabItem {
-                    Image(systemName: "fork.knife")
-                    Text("레시피")
+                    Label("레시피", systemImage: "fork.knife")
                 }
 
             FavoritesView()
                 .tabItem {
-                    Image(systemName: "heart.fill")
-                    Text("즐겨찾기")
+                    Label("즐겨찾기", systemImage: "heart")
+                }
+
+            NotificationLogView()
+                .tabItem {
+                    Label("알림", systemImage: "bell")
                 }
         }
     }
