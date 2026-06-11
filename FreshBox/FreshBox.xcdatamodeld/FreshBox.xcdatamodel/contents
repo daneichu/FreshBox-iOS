@@ -2,8 +2,13 @@
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="24512" systemVersion="24G720" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="FavoriteRecipe" representedClassName="FavoriteRecipe" syncable="YES" codeGenerationType="class">
         <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="difficulty" optional="YES" attributeType="String"/>
+        <attribute name="extraIngredientsText" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="stepsText" optional="YES" attributeType="String"/>
+        <attribute name="time" optional="YES" attributeType="String"/>
         <attribute name="title" optional="YES" attributeType="String"/>
+        <attribute name="usedIngredientsText" optional="YES" attributeType="String"/>
     </entity>
     <entity name="Ingredient" representedClassName="Ingredient" syncable="YES" codeGenerationType="class">
         <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>

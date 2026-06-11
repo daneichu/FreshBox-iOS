@@ -30,31 +30,35 @@ struct HomeView: View {
                 } else {
                     List {
                         ForEach(ingredients) { ingredient in
-                            HStack(spacing: 12) {
-                                Text(ingredientEmoji(for: ingredient.name))
-                                    .font(.title2)
+                            NavigationLink {
+                                EditIngredientView(ingredient: ingredient)
+                            } label: {
+                                HStack(spacing: 12) {
+                                    Text(ingredientEmoji(for: ingredient.name))
+                                        .font(.title2)
 
-                                VStack(alignment: .leading, spacing: 6) {
-                                    Text(ingredient.name ?? "이름 없음")
-                                        .font(.headline)
+                                    VStack(alignment: .leading, spacing: 6) {
+                                        Text(ingredient.name ?? "이름 없음")
+                                            .font(.headline)
 
-                                    Text(ingredient.quantity ?? "")
+                                        Text(ingredient.quantity ?? "")
+                                            .font(.caption)
+                                            .foregroundColor(.gray)
+                                    }
+
+                                    Spacer()
+
+                                    Text(dDayText(for: ingredient.expiryDate))
                                         .font(.caption)
-                                        .foregroundColor(.gray)
+                                        .fontWeight(.bold)
+                                        .padding(.horizontal, 10)
+                                        .padding(.vertical, 6)
+                                        .background(dDayColor(for: ingredient.expiryDate).opacity(0.2))
+                                        .foregroundColor(dDayColor(for: ingredient.expiryDate))
+                                        .cornerRadius(18)
                                 }
-
-                                Spacer()
-
-                                Text(dDayText(for: ingredient.expiryDate))
-                                    .font(.caption)
-                                    .fontWeight(.bold)
-                                    .padding(.horizontal, 10)
-                                    .padding(.vertical, 6)
-                                    .background(dDayColor(for: ingredient.expiryDate).opacity(0.2))
-                                    .foregroundColor(dDayColor(for: ingredient.expiryDate))
-                                    .cornerRadius(18)
+                                .padding(.vertical, 4)
                             }
-                            .padding(.vertical, 4)
                         }
                         .onDelete(perform: deleteIngredients)
                     }
@@ -178,7 +182,7 @@ struct HomeView: View {
             return "🧄"
         } else if name.contains("우유") {
             return "🥛"
-        } else if name.contains("고기") {
+        } else if name.contains("고기") || name.contains("돼지고기") {
             return "🥩"
         } else {
             return "🥬"

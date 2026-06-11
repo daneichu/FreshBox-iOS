@@ -6,6 +6,12 @@ struct RecipeDetailView: View {
     @State private var isSaved = false
     
     let recipe: Recipe
+    let showFavoriteButton: Bool
+    
+    init(recipe: Recipe, showFavoriteButton: Bool = true) {
+        self.recipe = recipe
+        self.showFavoriteButton = showFavoriteButton
+    }
     
     var body: some View {
         ScrollView {
@@ -46,18 +52,20 @@ struct RecipeDetailView: View {
                     }
                 }
                 
-                Button {
-                    saveFavoriteRecipe()
-                } label: {
-                    Text(isSaved ? "저장 완료" : "즐겨찾기 저장")
-                        .fontWeight(.bold)
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(isSaved ? Color.gray : Color.green)
-                        .foregroundColor(.white)
-                        .cornerRadius(16)
+                if showFavoriteButton {
+                    Button {
+                        saveFavoriteRecipe()
+                    } label: {
+                        Text(isSaved ? "저장 완료" : "즐겨찾기 저장")
+                            .fontWeight(.bold)
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(isSaved ? Color.gray : Color.green)
+                            .foregroundColor(.white)
+                            .cornerRadius(16)
+                    }
+                    .disabled(isSaved)
                 }
-                .disabled(isSaved)
             }
             .padding()
         }
@@ -71,10 +79,16 @@ struct RecipeDetailView: View {
                 .font(.title3)
                 .fontWeight(.bold)
             
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 10) {
-                    ForEach(ingredients, id: \.self) { ingredient in
-                        ingredientTag(ingredient, color: color)
+            if ingredients.isEmpty {
+                Text("표시할 재료가 없어요")
+                    .font(.subheadline)
+                    .foregroundColor(.gray)
+            } else {
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 10) {
+                        ForEach(ingredients, id: \.self) { ingredient in
+                            ingredientTag(ingredient, color: color)
+                        }
                     }
                 }
             }
@@ -106,10 +120,16 @@ struct RecipeDetailView: View {
             favorite.id = UUID()
             favorite.title = recipe.title
             favorite.createdAt = Date()
+
+            favorite.usedIngredientsText = recipe.usedIngredients.joined(separator: "|")
+            favorite.extraIngredientsText = recipe.extraIngredients.joined(separator: "|")
+            favorite.stepsText = recipe.steps.joined(separator: "|")
+            favorite.time = recipe.time
+            favorite.difficulty = recipe.difficulty
             
             try viewContext.save()
             isSaved = true
-            print("즐겨찾기 저장 완료")
+            
         } catch {
             print("즐겨찾기 저장 실패: \(error.localizedDescription)")
         }

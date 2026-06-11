@@ -35,17 +35,24 @@ struct FavoritesView: View {
                 } else {
                     List {
                         ForEach(favorites) { favorite in
-                            VStack(alignment: .leading, spacing: 6) {
-                                Text(favorite.title ?? "이름 없음")
-                                    .font(.headline)
+                            NavigationLink {
+                                RecipeDetailView(
+                                    recipe: makeRecipe(from: favorite),
+                                    showFavoriteButton: false
+                                )
+                            } label: {
+                                VStack(alignment: .leading, spacing: 6) {
+                                    Text(favorite.title ?? "이름 없음")
+                                        .font(.headline)
 
-                                if let createdAt = favorite.createdAt {
-                                    Text(createdAt.formatted(date: .abbreviated, time: .shortened))
-                                        .font(.caption)
-                                        .foregroundColor(.gray)
+                                    if let createdAt = favorite.createdAt {
+                                        Text(createdAt.formatted(date: .abbreviated, time: .shortened))
+                                            .font(.caption)
+                                            .foregroundColor(.gray)
+                                    }
                                 }
+                                .padding(.vertical, 4)
                             }
-                            .padding(.vertical, 4)
                         }
                         .onDelete(perform: deleteFavorites)
                     }
@@ -53,6 +60,27 @@ struct FavoritesView: View {
             }
             .navigationTitle("즐겨찾기")
         }
+    }
+    
+    private func makeRecipe(from favorite: FavoriteRecipe) -> Recipe {
+        Recipe(
+            title: favorite.title ?? "",
+            usedIngredients: splitText(favorite.usedIngredientsText),
+            extraIngredients: splitText(favorite.extraIngredientsText),
+            steps: splitText(favorite.stepsText),
+            time: favorite.time ?? "",
+            difficulty: favorite.difficulty ?? ""
+        )
+    }
+    
+    private func splitText(_ text: String?) -> [String] {
+        guard let text = text, !text.isEmpty else {
+            return []
+        }
+        
+        return text
+            .components(separatedBy: "|")
+            .filter { !$0.trimmingCharacters(in: .whitespaces).isEmpty }
     }
     
     private func deleteFavorites(offsets: IndexSet) {
